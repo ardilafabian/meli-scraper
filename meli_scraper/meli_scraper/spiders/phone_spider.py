@@ -42,8 +42,8 @@ class PhoneSpider(scrapy.Spider):
             yield response.follow(next_page_button_link, self.parse_items, cb_kwargs={'items': items, 'pages': pages - 1, 'quantity': quantity})
         else: 
             yield {
-                'items': items,
-                'quantity': quantity
+                'quantity': quantity,
+                'items': items
             }
         
         print('*'*10)
