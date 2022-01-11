@@ -33,14 +33,13 @@ class PhoneSpider(scrapy.Spider):
                 item['free_fees'] = item_selection.xpath('.//div[contains(@class, "ui-search-item__group--price")]/span/text()').get() # TODO: process to just get the number
                 items.append(item)
         
+        # TODO: Add var quantity to any output
+
         next_page_button_link = response.xpath('//div[@class="ui-search-pagination"]/ul/li[contains(@class, "__button--next")]/a/@href').get()
         if next_page_button_link and pages > 0:
             yield response.follow(next_page_button_link, self.parse_items, cb_kwargs={'items': items, 'pages': pages - 1, 'quantity': quantity})
         else: 
-            yield {
-                'quantity': quantity,
-                'items': items
-            }
+            yield {'items':items}
 
     def parse(self, response):
         pages = int(getattr(self, 'pages', '1')) # TODO: set default pages to 5
