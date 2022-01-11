@@ -16,6 +16,7 @@ class PhoneSpider(scrapy.Spider):
 
     def parse_items(self, response, **kwargs):
         items = kwargs['items']
+        pages = kwargs['pages']
 
         print('*'*10)
         print('\n\n')
@@ -32,15 +33,18 @@ class PhoneSpider(scrapy.Spider):
                 items.append(item)
                 print(idx, item)
         
-        """next_page_button_link = response.xpath('//div[@class="ui-search-pagination"]/ul/li[contains(@class, "__button--next")]/a/@href').get()
-        if next_page_button_link:
-            yield response.follow(next_page_button_link, self.parse_items, cb_kwargs={'items': items})"""
+        next_page_button_link = response.xpath('//div[@class="ui-search-pagination"]/ul/li[contains(@class, "__button--next")]/a/@href').get()
+        if next_page_button_link and pages > 0:
+            yield response.follow(next_page_button_link, self.parse_items, cb_kwargs={'items': items, 'pages': pages - 1})
+        else: {
+            'items': items
+        }
         
         print('*'*10)
         print('\n\n')
 
     def parse(self, response):
-        # pages = int(getattr(self, 'pages', '5'))
+        pages = int(getattr(self, 'pages', '1')) # TODO: set default pages to 5
         samsung_filter_button_link = response.xpath('//h3[contains(@class, "__item__header") and contains(text(),"Samsung")]/parent::a/@href').get()
         if samsung_filter_button_link:
-            yield response.follow(samsung_filter_button_link, callback=self.parse_items, cb_kwargs={'items':[]})
+            yield response.follow(samsung_filter_button_link, callback=self.parse_items, cb_kwargs={'items':[], 'pages':pages})
