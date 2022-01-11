@@ -10,6 +10,8 @@ class PhoneSpider(scrapy.Spider):
         'https://listado.mercadolibre.com.ar/celular-smarphones'
     ]
     custom_settings = {
+        'FEED_URI': 'items.json',
+        'FEED_FORMAT': 'json',
         'USER_AGENT': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36',
         'FEED_EXPORT_ENCODING': 'utf-8'
     }
@@ -17,6 +19,7 @@ class PhoneSpider(scrapy.Spider):
     def parse_items(self, response, **kwargs):
         items = kwargs['items']
         pages = kwargs['pages']
+        quantity = kwargs['quantity']
 
         print('*'*10)
         print('\n\n')
@@ -25,6 +28,7 @@ class PhoneSpider(scrapy.Spider):
         for idx, item_selection in enumerate(items_list):
             is_full = item_selection.xpath('.//span[@class="ui-search-item__fulfillment"]').get()
             if is_full:
+                quantity += 1
                 item = MeliScraperItem()
                 item['name'] = item_selection.xpath('./div[contains(@class, "title")]/a/h2/text()').get()
                 item['price'] = item_selection.xpath('.//span[@class="price-tag-fraction"]/text()').get()
@@ -35,10 +39,12 @@ class PhoneSpider(scrapy.Spider):
         
         next_page_button_link = response.xpath('//div[@class="ui-search-pagination"]/ul/li[contains(@class, "__button--next")]/a/@href').get()
         if next_page_button_link and pages > 0:
-            yield response.follow(next_page_button_link, self.parse_items, cb_kwargs={'items': items, 'pages': pages - 1})
-        else: {
-            'items': items
-        }
+            yield response.follow(next_page_button_link, self.parse_items, cb_kwargs={'items': items, 'pages': pages - 1, 'quantity': quantity})
+        else: 
+            yield {
+                'items': items,
+                'quantity': quantity
+            }
         
         print('*'*10)
         print('\n\n')
@@ -47,4 +53,4 @@ class PhoneSpider(scrapy.Spider):
         pages = int(getattr(self, 'pages', '1')) # TODO: set default pages to 5
         samsung_filter_button_link = response.xpath('//h3[contains(@class, "__item__header") and contains(text(),"Samsung")]/parent::a/@href').get()
         if samsung_filter_button_link:
-            yield response.follow(samsung_filter_button_link, callback=self.parse_items, cb_kwargs={'items':[], 'pages':pages})
+            yield response.follow(samsung_filter_button_link, callback=self.parse_items, cb_kwargs={'items':[], 'pages':pages, 'quantity': 0})
