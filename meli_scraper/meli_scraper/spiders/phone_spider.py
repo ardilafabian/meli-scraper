@@ -21,11 +21,8 @@ class PhoneSpider(scrapy.Spider):
         pages = kwargs['pages']
         quantity = kwargs['quantity']
 
-        print('*'*10)
-        print('\n\n')
-        # TODO: pensar si se puede traer sólo los FULL
         items_list = response.xpath('//div[@class="ui-search-result__content-wrapper"]')
-        for idx, item_selection in enumerate(items_list):
+        for item_selection in items_list:
             is_full = item_selection.xpath('.//span[@class="ui-search-item__fulfillment"]').get()
             if is_full:
                 quantity += 1
@@ -33,9 +30,8 @@ class PhoneSpider(scrapy.Spider):
                 item['name'] = item_selection.xpath('./div[contains(@class, "title")]/a/h2/text()').get()
                 item['price'] = item_selection.xpath('.//span[@class="price-tag-fraction"]/text()').get()
                 item['reviews'] = item_selection.xpath('.//span[@class="ui-search-reviews__amount"]/text()').get()
-                item['free_fees'] = item_selection.xpath('.//div[contains(@class, "ui-search-item__group--price")]/span/text()').get()
+                item['free_fees'] = item_selection.xpath('.//div[contains(@class, "ui-search-item__group--price")]/span/text()').get() # TODO: process to just get the number
                 items.append(item)
-                print(idx, item)
         
         next_page_button_link = response.xpath('//div[@class="ui-search-pagination"]/ul/li[contains(@class, "__button--next")]/a/@href').get()
         if next_page_button_link and pages > 0:
@@ -45,9 +41,6 @@ class PhoneSpider(scrapy.Spider):
                 'quantity': quantity,
                 'items': items
             }
-        
-        print('*'*10)
-        print('\n\n')
 
     def parse(self, response):
         pages = int(getattr(self, 'pages', '1')) # TODO: set default pages to 5
