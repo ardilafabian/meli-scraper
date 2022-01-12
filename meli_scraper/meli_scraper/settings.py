@@ -63,7 +63,8 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'meli_scraper.pipelines.MeliScraperPipeline': 300,
+    'meli_scraper.pipelines.NumericalDataCleanupPipeline': 200,
+    'meli_scraper.pipelines.MySqlPipeline': 300,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

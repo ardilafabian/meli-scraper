@@ -21,6 +21,7 @@ class PhoneSpider(scrapy.Spider):
         pages = kwargs['pages']
         quantity = kwargs['quantity']
 
+        # TODO: think about getting just FULL usgin descendant
         items_list = response.xpath('//div[@class="ui-search-result__content-wrapper"]')
         for item_selection in items_list:
             is_full = item_selection.xpath('.//span[@class="ui-search-item__fulfillment"]').get()

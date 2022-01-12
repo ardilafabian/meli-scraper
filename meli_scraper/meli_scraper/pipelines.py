@@ -10,7 +10,34 @@ from itemadapter import ItemAdapter
 import mysql.connector
 
 
-class MeliScraperPipeline:
+class NumericalDataCleanupPipeline:
+
+    def clean_price(self, str_price):
+        price = str_price.replace(".", "")
+        return int(price)
+
+    def clean_fee(self, str_fee):
+        fee = None
+        if str_fee:
+            fee = int(str_fee[6:7])
+        return fee
+
+    def clean_review(self, str_review):
+        review = None
+        if str_review:
+            review = int(str_review)
+        return review
+    
+    def process_item(self, items, spider):
+        items_list = items['items']
+        for item in items_list:
+            item['price'] = self.clean_price(item['price'])
+            item['free_fees'] = self.clean_fee(item['free_fees'])
+            item['reviews'] = self.clean_review(item['reviews'])
+        return {'items': items_list}
+
+
+class MySqlPipeline:
 
     def __init__(self):
         self.create_connection()
@@ -29,22 +56,13 @@ class MeliScraperPipeline:
         self.curr.execute("""DROP TABLE IF EXISTS meli_items""")
         self.curr.execute("""CREATE TABLE meli_items(
             name TEXT,
-            price TEXT,
-            reviews TEXT,
-            free_fees TEXT
+            price INT,
+            reviews INT,
+            free_fees INT
         )""")
-
-
-    def process_item(self, items, spider):
-        print('>>>>>>>> PIPELINE')
-        print(items)
-        self.store_db(items['items'])
-        return items
 
     def store_db(self, items):
         for item in items:
-            print('*'*10)
-            print(item)
             self.curr.execute("""INSERT INTO meli_items VALUES (%s,%s,%s,%s)""", (
                 item['name'],
                 item['price'],
@@ -52,3 +70,7 @@ class MeliScraperPipeline:
                 item['free_fees']
             ))
             self.conn.commit()
+
+    def process_item(self, items, spider):
+        self.store_db(items['items'])
+        return items
