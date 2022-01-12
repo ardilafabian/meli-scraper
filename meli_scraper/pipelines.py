@@ -29,8 +29,9 @@ class NumericalDataCleanupPipeline:
         return review
     
     def process_item(self, items, spider):
-        items_list = items['items']
-        for item in items_list:
+        items_dict = items['items']
+        for key in items_dict:
+            item = items_dict[key]
             item['price'] = self.clean_price(item['price'])
             item['reviews'] = self.clean_review(item['reviews'])
             # item['free_fees'] = self.clean_fee(item['free_fees'])
@@ -61,8 +62,9 @@ class MySqlPipeline:
             free_fees TEXT
         )""")
 
-    def store_db(self, items):
-        for item in items:
+    def store_db(self, items_dict):
+        for key in items_dict:
+            item = items_dict[key]
             self.curr.execute("""INSERT INTO meli_items VALUES (%s,%s,%s,%s)""", (
                 item['name'],
                 item['price'],
