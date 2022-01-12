@@ -40,7 +40,10 @@ class PhoneSpider(scrapy.Spider):
         if next_page_button_link and pages > 0:
             yield response.follow(next_page_button_link, self.parse_items, cb_kwargs={'items': items, 'pages': pages - 1, 'quantity': quantity})
         else: 
-            yield {'items':items}
+            yield {
+                'quantity': quantity,
+                'items':items
+            }
 
     def parse(self, response):
         pages = int(getattr(self, 'pages', '1')) # TODO: set default pages to 5

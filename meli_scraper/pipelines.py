@@ -34,7 +34,7 @@ class NumericalDataCleanupPipeline:
             item['price'] = self.clean_price(item['price'])
             item['free_fees'] = self.clean_fee(item['free_fees'])
             item['reviews'] = self.clean_review(item['reviews'])
-        return {'items': items_list}
+        return items
 
 
 class MySqlPipeline:
