@@ -32,8 +32,8 @@ class NumericalDataCleanupPipeline:
         items_list = items['items']
         for item in items_list:
             item['price'] = self.clean_price(item['price'])
-            item['free_fees'] = self.clean_fee(item['free_fees'])
             item['reviews'] = self.clean_review(item['reviews'])
+            # item['free_fees'] = self.clean_fee(item['free_fees'])
         return items
 
 
@@ -41,7 +41,7 @@ class MySqlPipeline:
 
     def __init__(self):
         self.create_connection()
-        self.create_table()
+        # self.create_table()
 
     def create_connection(self):
         self.conn = mysql.connector.connect(
@@ -58,7 +58,7 @@ class MySqlPipeline:
             name TEXT,
             price INT,
             reviews INT,
-            free_fees INT
+            free_fees TEXT
         )""")
 
     def store_db(self, items):
@@ -73,4 +73,5 @@ class MySqlPipeline:
 
     def process_item(self, items, spider):
         self.store_db(items['items'])
+        self.conn.close()
         return items

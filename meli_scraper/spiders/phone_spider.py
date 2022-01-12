@@ -31,7 +31,7 @@ class PhoneSpider(scrapy.Spider):
                 item['name'] = item_selection.xpath('./div[contains(@class, "title")]/a/h2/text()').get()
                 item['price'] = item_selection.xpath('.//span[@class="price-tag-fraction"]/text()').get()
                 item['reviews'] = item_selection.xpath('.//span[@class="ui-search-reviews__amount"]/text()').get()
-                item['free_fees'] = item_selection.xpath('.//div[contains(@class, "ui-search-item__group--price")]/span/text()').get() # TODO: process to just get the number
+                item['free_fees'] = item_selection.xpath('.//div[contains(@class, "ui-search-item__group--price")]/span/text()').get()
                 items.append(item)
 
         next_page_button_link = response.xpath('//div[@class="ui-search-pagination"]/ul/li[contains(@class, "__button--next")]/a/@href').get()
