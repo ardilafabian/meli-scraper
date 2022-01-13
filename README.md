@@ -44,7 +44,7 @@ When the execution has finished you will have two outputs.
 > If you run the algorithm more than once, then remember to delete the ```items.json``` file if you don't want to append the new output in the same file
 2. The second output is in a MySQL database that lives in Google Cloud and it is going to be populated once you run the algorithm. The data normalized is seen as follow:
 
-![DB Image](https://github.com/ardilafabian/meli-scraper/tree/main/statics/db_output.png?raw=true)
+![DB Image](https://github.com/ardilafabian/meli-scraper/blob/main/statics/db_output.png?raw=true)
 
 If you are a tech savvy and you already have a MySQL client installed, then you would like to take a quick look at the ~~48 line~~ of this super secret [file](https://github.com/ardilafabian/meli-scraper/blob/main/meli_scraper/pipelines.py).
 
