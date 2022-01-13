@@ -4,7 +4,7 @@ This is a scraper software that retrieve data from the [Mercado Libre](https://l
 
 The program is developed using _Scrapy Framework_ from Python because at the moment is one of the most powerful frameworks to crawl data from webpages using XPath language.
 
-Since I have some experience using Python, this is my first scraper using _Scrapy_ as a scraper framework and in order to accomplish this I had to complete some courses in record time. One of the biggest challenges was to understang how to use all the tools scrappy give me to develop a very efficient and professional piece of code.
+Since I have some experience using Python, this is my first scraper using _Scrapy_ as a scraper framework and in order to accomplish this I had to complete some courses in record time. One of the biggest challenges was to understand how to use all the tools scrappy give me to develop a very efficient and professional piece of code.
 
 ## Content table
 1. [Installation](#installation)
@@ -18,7 +18,8 @@ Since I have some experience using Python, this is my first scraper using _Scrap
 ```
 git clone https://github.com/ardilafabian/meli-scraper.git
 ```
-If you don't have Git you can download the source code by clicking [here](https://github.com/ardilafabian/meli-scraper/archive/refs/heads/main.zip).
+_If you don't have Git you can download the source code by clicking [here](https://github.com/ardilafabian/meli-scraper/archive/refs/heads/main.zip)._
+
 3. Now you have to access to the folder project. It's really recommended to use a python virtual environment to don't get a conflict while installing the project dependencies. You can check the documentation to initialize and activate a virtual environment with python [here](https://docs.python.org/3/library/venv.html).
 4. Once you have your virtual environment activated you need to instal the project dependencies running the following command:
 ```
@@ -40,7 +41,7 @@ scrapy crawl meli -a pages=<pages_number>
 Replace ```<pages_number>``` with the number of pages you want.
 
 When the execution has finished you will have two outputs. 
-1. One of them is a ```.json``` file called ```items.json```, you will find it in the main folder of the project. This file contains the structure of the items found that accomplish the conditions mentioned [above](#mercado-libre-scraper) and also you will find the attribute ```quantity``` that indicates the number of items found.
+1. One of them is a ```.json``` file called ```items.json```, you will find it in the root folder of the project. This file contains the structure of the items found that accomplish the conditions mentioned [above](#mercado-libre-scraper) and also you will find the attribute ```quantity``` that indicates the number of items found.
 > If you run the algorithm more than once, then remember to delete the ```items.json``` file if you don't want to append the new output in the same file
 2. The second output is in a MySQL database that lives in Google Cloud and it is going to be populated once you run the algorithm. The data normalized is seen as follow:
 
