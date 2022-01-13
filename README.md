@@ -9,12 +9,12 @@ Since I have some experience using Python, this is my first scraper using _Scrap
 ## Content table
 1. [Installation](#installation)
 2. [Usage](#usage)
-3. [License](#licence)
+3. [License](#license)
 
 ## Installation
 
 1. The prerequisite is to have Python installed in your machine. The program was developed with python **v.3.10.1** you can use this one or grater versions to assure corrent behavior.
-2. You need to download this repository in your machine. You can clone the repository using Git and running the follow command:
+2. You need to download this repository in your machine. You can clone the repository using Git and running the following command:
 ```
 git clone https://github.com/ardilafabian/meli-scraper.git
 ```
@@ -28,7 +28,25 @@ pip install -r requirements.txt
 
 ## Usage
 
+When you are in the folder you have to run the following command in order to extract the data:
+```
+scrapy crawl meli
+```
 
+By default the algorithm will extract the data of the first 5 list pages, but you can modify this quantity by sending a parameter indicating the number of pages you want to scrap. To do this you need to run the following command:
+```
+scrapy crawl meli -a pages=<pages_number>
+```
+Replace ```<pages_number>``` with the number of pages you want.
+
+When the execution has finished you will have two outputs. 
+1. One of them is a ```.json``` file called ```items.json```, you will find it in the main folder of the project. This file contains the structure of the items found that acomplish the conditions mentioned [above](#mercado-libre-scraper) and also you will find the attribute ```quantity``` that indicates the number of items found.
+> If you run the algorithm more than once, then remember to delete the ```items.json``` file if you don't want to append the new output in the same file
+2. The second output is in a MySQL database that lives in Google Cloud and it is going to be populated once you run the algorithm. The data normalized is seen as follow:
+
+![DB Image](https://github.com/ardilafabian/meli-scraper/tree/main/statics/db_output.png?raw=true)
+
+If you are a tech savvy and you already have a MySQL client installed, then you would like to take a quick look at the ~~48 line~~ of this super secret [file](https://github.com/ardilafabian/meli-scraper/blob/main/meli_scraper/pipelines.py).
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
