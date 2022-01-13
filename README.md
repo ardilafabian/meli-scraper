@@ -9,7 +9,8 @@ Since I have some experience using Python, this is my first scraper using _Scrap
 ## Content table
 1. [Installation](#installation)
 2. [Usage](#usage)
-3. [License](#license)
+3. [Technical (interesting) facts](#technical-interesting-facts)
+4. [License](#license)
 
 ## Installation
 
