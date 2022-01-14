@@ -56,5 +56,12 @@ If you are a tech savvy and you already have a MySQL client installed, then you 
 - The algorithm verify duplicate elements when validate coincidence between item names and prices, this process is done in order to keep data as reliable as possible.
 - Before getting the output, the data extracted goes through two pipelines and one of them is in charge of cleanning the numerical data in order to keep the right type of values in our database. This will be useful at the moment of analyse the data directly in our database.
 
+## Future work
+
+- Add more custom parameters such URL to scrap
+- Access to each item to retrieve specific data such as caracteristics, vendor name, etc.
+- For a huge project it's really necessary to increase security. For example hosts and connection to DB should be kept in secrets in the cloud.
+- Separate environment variables according to the stage we are working on, i.e. production, development
+
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
