@@ -10,7 +10,8 @@ Since I have some experience using Python, this is my first scraper using _Scrap
 1. [Installation](#installation)
 2. [Usage](#usage)
 3. [Technical (interesting) facts](#technical-interesting-facts)
-4. [License](#license)
+4. [Future work](#future-work)
+5. [License](#license)
 
 ## Installation
 
