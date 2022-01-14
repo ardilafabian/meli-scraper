@@ -46,7 +46,7 @@ class MySqlPipeline:
 
     def create_connection(self):
         self.conn = mysql.connector.connect(
-            host= 'localhost',
+            host= '34.71.38.137',
             user = 'root',
             password = 'admin123',
             database = 'meli_db'
